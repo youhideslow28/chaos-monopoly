@@ -1,9 +1,9 @@
-name: "Schedule 3 — Nightly AI & Multi-World Balance Simulation"
+name: "Schedule 3 — 30-Minute 72-Match AI & Multi-World Balance Simulation"
 
 on:
   schedule:
-    # Chạy định kỳ mỗi đêm lúc 02:00 UTC (09:00 sáng giờ Việt Nam)
-    - cron: '0 2 * * *'
+    # Chạy tự động mỗi 30 phút 1 lần (24/7)
+    - cron: '*/30 * * * *'
   workflow_dispatch:
 
 jobs:
