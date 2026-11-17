@@ -161,6 +161,16 @@ sudo certbot --nginx -d chaos.yourdomain.com
 3. Trong tab **Settings**, thêm Volume mount trỏ tới `/app/data`.
 4. Thiết lập biến môi trường `ALLOWED_ORIGINS` tương ứng domain do Railway cấp.
 
+### 5.3. Triển Khai Full-Stack trên Vercel (Frontend + Serverless API + SQLite WAL + Domain)
+Dự án đã được tích hợp sẵn cấu hình `vercel.json` và Serverless Function `api/index.ts` hỗ trợ **Dual-Transport** (tự động chuyển đổi giữa WebSocket `/ws` và HTTP Polling `/api/multiplayer` khi chạy trên hạ tầng Serverless của Vercel):
+1. Truy cập [Vercel Dashboard](https://vercel.com/new) và chọn **Import Git Repository** → chọn `youhideslow28/chaos-monopoly`.
+2. Vercel sẽ tự động nhận diện `vercel.json`:
+   - **Frontend SPA:** Build bằng `npm run build` và phân phối qua Edge CDN (`dist/`).
+   - **Backend Multiplayer & Database:** Mọi request `/api/*` (`/api/multiplayer`, `/api/rooms/*`, `/api/health`, `/api/ready`, `/api/cron/maintenance`) được định tuyến tới `api/index.ts` với cơ sở dữ liệu SQLite WAL lưu tại `/tmp/chaos-multiplayer.sqlite` (hoặc `MULTIPLAYER_DB_PATH`).
+   - **Vercel Cron Job:** Tự động chạy `/api/cron/maintenance` mỗi ngày lúc `03:00 UTC` để dọn phòng hết hạn và thực thi `PRAGMA wal_checkpoint(PASSIVE)`.
+3. **Gắn Custom Domain:** Vào **Project Settings → Domains**, thêm tên miền của bạn (hoặc dùng domain mặc định `chaos-monopoly.vercel.app`).
+4. *(Tuỳ chọn nâng cao)* Nếu bạn muốn chạy thêm cụm WebSocket chuyên biệt trên Railway/Render, chỉ cần thêm biến môi trường `VITE_WS_URL=wss://your-ws-backend.example.com/ws` trong Vercel Settings.
+
 ---
 
 ## 6. QUY TRÌNH KIỂM THỬ KHÓI SAU TRIỂN KHAI (POST-DEPLOYMENT SMOKE TEST)
