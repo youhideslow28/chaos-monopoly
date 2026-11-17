@@ -1,0 +1,32 @@
+name: "Schedule 3 — Nightly AI & Multi-World Balance Simulation"
+
+on:
+  schedule:
+    # Chạy định kỳ mỗi đêm lúc 02:00 UTC (09:00 sáng giờ Việt Nam)
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  ai-and-world-balance-tournament:
+    name: "72-Match AI Tournament & 6-World Economy Telemetry"
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: "Checkout Repository"
+        uses: actions/checkout@v4
+
+      - name: "Setup Node.js 22"
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: "Install Dependencies"
+        run: npm ci
+
+      - name: "Run 72-Match Seat-Balanced AI Tournament & Chaos Engine Verification"
+        run: npx vitest run src/game/__tests__/phase03_ai_and_chaos.test.ts src/game/__tests__/phase03_simulation_benchmark.test.ts
+
+      - name: "Run Multi-World Economy & Balance Benchmarks (30 Matches / World)"
+        run: npx vitest run src/game/__tests__/phase05_worlds.test.ts src/game/__tests__/economy_6worlds_overhaul.test.ts src/game/__tests__/world_balance_m2.test.ts

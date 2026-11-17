@@ -1,0 +1,476 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+/* ---------------------------------------------------------------------------
+   Text system: exactly three roles. One font stack with full Vietnamese
+   coverage ("Outfit" first, then system fonts that all ship Vietnamese).
+   Use these classes instead of ad-hoc font sizes/weights.
+     .t-title  headings, numbers on cards
+     .t-body   paragraphs and values
+     .t-label  small uppercase labels and buttons
+--------------------------------------------------------------------------- */
+.t-title,
+.t-body,
+.t-label {
+  font-family: 'Outfit', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-synthesis: none;
+}
+
+.t-title {
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+}
+
+.t-body {
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.45;
+}
+
+.t-label {
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f6f3ec;
+  color: #0f172a;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom Board-Game Light Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* 3D Board Perspective Viewport (Orthographic Emulation) */
+.perspective-board {
+  perspective: 3200px;
+  perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
+}
+
+/* 2.5D Isometric Diamond Mode (Calibrated 55deg pitch, 45deg yaw) */
+.isometric-view {
+  transform: rotateX(55deg) rotateZ(45deg);
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.18), 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+/* 2D Flat Mode */
+.flat-view {
+  transform: rotateX(0deg) rotateZ(0deg);
+  transform-style: flat;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.1);
+}
+
+/* 3D Transform Utilities */
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Dice Shaking Animation */
+@keyframes diceShake {
+  0% { transform: translate(1px, 1px) rotate(0deg) scale(1.05); }
+  20% { transform: translate(-2px, 0px) rotate(-8deg) scale(1.08); }
+  40% { transform: translate(2px, -1px) rotate(8deg) scale(1.05); }
+  60% { transform: translate(-1px, 2px) rotate(0deg) scale(1.08); }
+  80% { transform: translate(1px, -2px) rotate(6deg) scale(1.05); }
+  100% { transform: translate(-1px, 1px) rotate(-6deg) scale(1.05); }
+}
+
+.animate-dice-shake {
+  animation: diceShake 0.14s infinite ease-in-out;
+}
+
+/* Subtle Calamity Screen Shake */
+@keyframes shakeSubtle {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-3px, 2px); }
+  40% { transform: translate(3px, -2px); }
+  60% { transform: translate(-2px, -1px); }
+  80% { transform: translate(2px, 2px); }
+}
+
+.animate-shake-subtle {
+  animation: shakeSubtle 0.35s ease-in-out;
+}
+
+/* Token Hopping Keyframes (2D Planar Fallback) */
+@keyframes tokenHop {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  40% {
+    transform: translateY(-14px) scale(1.25);
+    box-shadow: 0 14px 18px rgba(0, 0, 0, 0.5);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-token-hop {
+  animation: tokenHop 0.13s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 3D Vertical Token Hop along Surface Normal (+Z) */
+@keyframes tokenHop3D {
+  0% {
+    transform: translateZ(6px) scale(1);
+  }
+  40% {
+    transform: translateZ(28px) scale(1.22);
+    filter: drop-shadow(0 20px 14px rgba(0, 0, 0, 0.7));
+  }
+  100% {
+    transform: translateZ(6px) scale(1);
+  }
+}
+
+.animate-token-hop-3d {
+  animation: tokenHop3D 0.13s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Glassmorphism Surface Panels (Light Theme Board-Game Aesthetic) */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+}
+
+.glass-panel-active {
+  background: #ffffff;
+  backdrop-filter: blur(16px);
+  border: 2px solid #16a34a;
+  box-shadow: 0 10px 25px -3px rgba(22, 163, 74, 0.2), 0 4px 10px -2px rgba(22, 163, 74, 0.1);
+}
+
+/* Warm Tabletop Surface */
+.tabletop-bg {
+  background-color: #f8fafc;
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.8) 0%, rgba(241, 245, 249, 0.6) 100%),
+    radial-gradient(ellipse at 50% 20%, rgba(255, 255, 255, 0.9) 0%, transparent 60%);
+}
+
+/* Card Surface & Elevation */
+.card-elevation-sm {
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.06), 0 1px 2px -1px rgba(15, 23, 42, 0.06);
+}
+
+.card-elevation-md {
+  box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+}
+
+.card-elevation-lg {
+  box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+}
+
+/* Accents & Focus Rings */
+.shadow-soft-emerald {
+  box-shadow: 0 4px 14px 0 rgba(22, 163, 74, 0.25);
+}
+.shadow-soft-amber {
+  box-shadow: 0 4px 14px 0 rgba(217, 119, 6, 0.22);
+}
+.shadow-soft-blue {
+  box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.22);
+}
+
+/* Pulsing Active Token Ring (Warm Green Focus) */
+@keyframes tokenAura {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(22, 163, 74, 0);
+  }
+}
+
+.token-active-pulse {
+  animation: tokenAura 1.8s infinite;
+}
+
+/* ===== Classic layout shell: one screen, no page scroll =====
+   Phone portrait / tablet: header, players, board, dock stacked.
+   Desktop: board + side log.  Phone landscape: board left, players + dock right. */
+.game-shell {
+  display: grid;
+  height: 100vh;
+  height: 100dvh;
+  background: #f6f3ec;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  grid-template-areas: 'header' 'players' 'board' 'dock';
+}
+.gs-header { grid-area: header; }
+.gs-players { grid-area: players; min-width: 0; }
+.gs-board { grid-area: board; min-width: 0; min-height: 0; padding: 4px 8px; }
+.gs-side { grid-area: side; display: none; min-height: 0; }
+.gs-dock { grid-area: dock; min-width: 0; }
+
+@media (min-width: 1024px) {
+  .game-shell {
+    grid-template-columns: minmax(0, 1fr) 300px;
+    grid-template-areas: 'header header' 'players players' 'board side' 'dock dock';
+  }
+  .gs-side { display: flex; flex-direction: column; padding: 4px 12px 4px 0; }
+  .gs-board { padding: 4px 8px 4px 12px; }
+}
+
+@media (orientation: landscape) and (max-height: 520px) {
+  .game-shell {
+    grid-template-columns: minmax(0, 1fr) 270px;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-areas: 'header header' 'board players' 'board dock';
+  }
+  .gs-side { display: none; }
+  .gs-players { overflow-y: auto; padding-right: 8px; }
+  .gs-players .players-strip { flex-direction: column; overflow: visible; padding: 4px 0; }
+  .gs-players .player-chip { min-width: 0; }
+  .gs-dock { padding-right: 8px; }
+}
+
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Accessibility: Prefers Reduced Motion Overrides */
+@media (prefers-reduced-motion: reduce) {
+  .isometric-view {
+    transform: none !important;
+    transition: none !important;
+  }
+  .token-active-pulse,
+  .animate-dice-shake,
+  .animate-shake-subtle,
+  .animate-token-hop,
+  .animate-token-hop-3d,
+  .animate-pulse,
+  .animate-bounce {
+    animation: none !important;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+
+/* ===== Phase 05: World ambience (CSS-only, low cost) ===== */
+.world-env-rain {
+  background-image: repeating-linear-gradient(105deg, rgba(180,200,255,0.55) 0 1px, transparent 1px 22px);
+  background-size: 140px 140px;
+  animation: worldRain 0.9s linear infinite;
+}
+.world-env-stars {
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 20%, #fff, transparent),
+    radial-gradient(1px 1px at 38% 70%, #cfe3ff, transparent),
+    radial-gradient(1.5px 1.5px at 64% 30%, #fff, transparent),
+    radial-gradient(1px 1px at 82% 80%, #cfe3ff, transparent),
+    radial-gradient(1px 1px at 92% 12%, #fff, transparent),
+    radial-gradient(1px 1px at 25% 90%, #fff, transparent);
+  animation: worldTwinkle 6s ease-in-out infinite alternate;
+}
+.world-env-firefly { animation: worldFirefly 7s ease-in-out infinite; filter: blur(0.5px); }
+@keyframes worldRain { to { background-position: -40px 140px; } }
+@keyframes worldTwinkle { from { opacity: 0.45; } to { opacity: 0.9; } }
+@keyframes worldFirefly {
+  0%, 100% { transform: translate(0, 0); opacity: 0.15; }
+  50% { transform: translate(18px, -26px); opacity: 0.8; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .world-env-rain, .world-env-stars, .world-env-firefly { animation: none; }
+  .spatial-meteor-projectile,
+  .spatial-shockwave-ring,
+  .spatial-shockwave-ring-delayed,
+  .spatial-market-grid,
+  .spatial-down-arrow,
+  .spatial-boom-aura,
+  [class*="spatial-gold-stream-"] {
+    animation: none !important;
+  }
+}
+
+/* ===== Phase 07 / Milestone 3: 3D Spatial Calamity VFX Keyframes ===== */
+.spatial-meteor-projectile {
+  animation: spatialMeteorDescent 1.1s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+@keyframes spatialMeteorDescent {
+  0% {
+    transform: translate3d(-50%, -50%, 280px) scale(0.6);
+    opacity: 0.9;
+  }
+  65% {
+    transform: translate3d(-50%, -50%, 0px) scale(1.3);
+    opacity: 1;
+  }
+  75% {
+    transform: translate3d(-50%, -50%, -5px) scale(1.6);
+    opacity: 0.2;
+  }
+  100% {
+    transform: translate3d(-50%, -50%, 0px) scale(0);
+    opacity: 0;
+  }
+}
+
+.spatial-shockwave-ring {
+  animation: spatialShockwave 1.8s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+}
+.spatial-shockwave-ring-delayed {
+  animation: spatialShockwave 1.8s cubic-bezier(0.1, 0.9, 0.2, 1) 0.15s forwards;
+}
+
+@keyframes spatialShockwave {
+  0%, 55% {
+    transform: translate(-50%, -50%) scale(0.1);
+    opacity: 0;
+  }
+  65% {
+    transform: translate(-50%, -50%) scale(0.25);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(3.2);
+    opacity: 0;
+  }
+}
+
+.spatial-scorch-decal {
+  animation: spatialScorch 2.5s ease-out forwards;
+}
+
+@keyframes spatialScorch {
+  0%, 65% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4);
+  }
+  70% {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  90% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+.spatial-market-grid {
+  animation: spatialMarketDescent 2.4s ease-out forwards;
+}
+
+@keyframes spatialMarketDescent {
+  0% {
+    transform: translate(-50%, -50%) translateZ(120px) scale(0.85);
+    opacity: 0;
+  }
+  20% {
+    transform: translate(-50%, -50%) translateZ(8px) scale(1);
+    opacity: 1;
+  }
+  85% {
+    transform: translate(-50%, -50%) translateZ(6px) scale(1);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate(-50%, -50%) translateZ(0px) scale(1.05);
+    opacity: 0;
+  }
+}
+
+.spatial-down-arrow {
+  animation: spatialDownBounce 0.6s infinite ease-in-out;
+}
+
+@keyframes spatialDownBounce {
+  0%, 100% {
+    transform: translateY(-4px);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+.spatial-boom-aura {
+  animation: spatialBoomExpand 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes spatialBoomExpand {
+  0% {
+    transform: translate(-50%, -50%) scale(0.2);
+    opacity: 0;
+  }
+  25% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.9;
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1.3);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.6);
+    opacity: 0;
+  }
+}
+
+[class*="spatial-gold-stream-"] {
+  animation: spatialGoldFountain 2.2s cubic-bezier(0.2, 0.8, 0.4, 1) forwards;
+}
+
+@keyframes spatialGoldFountain {
+  0% {
+    transform: translate3d(0, 0, 0px) scale(0.4);
+    opacity: 0;
+  }
+  20% {
+    transform: translate3d(0, 0, 40px) scale(1.2);
+    opacity: 1;
+  }
+  70% {
+    transform: translate3d(0, 0, 120px) scale(1);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate3d(0, 0, 160px) scale(0.6);
+    opacity: 0;
+  }
+}
+

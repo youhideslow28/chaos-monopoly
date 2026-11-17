@@ -1,0 +1,42 @@
+name: "Schedule 2 — Hourly Production & Multiplayer Health Probe"
+
+on:
+  schedule:
+    # Chạy định kỳ mỗi 6 giờ một lần (00:00, 06:00, 12:00, 18:00 UTC)
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  health-and-multiplayer-probe:
+    name: "Serverless API, WebSocket & SQLite WAL Probe"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: "Checkout Repository"
+        uses: actions/checkout@v4
+
+      - name: "Setup Node.js 22"
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: "Install Dependencies"
+        run: npm ci
+
+      - name: "Verify Multiplayer WebSocket, HTTP Fallback & Recovery Probes"
+        run: npx vitest run src/game/__tests__/phase04_multiplayer.test.ts src/game/__tests__/phase07_multiplayer_reliability.test.ts src/game/__tests__/phase09_vercel_and_http_multiplayer.test.ts
+
+      - name: "Probe Live Vercel Production Endpoint (if PRODUCTION_URL is configured)"
+        env:
+          PRODUCTION_URL: ${{ vars.PRODUCTION_URL }}
+        run: |
+          if [ -n "$PRODUCTION_URL" ]; then
+            echo "Probing live production health at $PRODUCTION_URL/api/health ..."
+            curl -fsS "$PRODUCTION_URL/api/health" | tee health_response.json
+            echo ""
+            curl -fsS "$PRODUCTION_URL/api/ready" | tee ready_response.json
+          else
+            echo "PRODUCTION_URL repository variable not set; local server/API probes passed."
+          fi

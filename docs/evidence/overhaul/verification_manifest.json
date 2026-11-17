@@ -1,0 +1,30 @@
+{
+  "timestamp": "2026-11-01T04:11:07.592Z",
+  "browserVersion": "156.0.8078.76",
+  "scenarios": {
+    "01_main_menu_light": "PASS: Clean warm tabletop, emerald Quick Play CTA, 4 mode cards",
+    "02_gameplay_3d_tabletop": "PASS: 3D WebGL Canvas rendered (true)",
+    "03_camera_preset_topdown": "PASS: Top-down camera aligned directly overhead",
+    "04_camera_preset_cinematic": "PASS: Deep cinematic camera angle with soft horizon shadows",
+    "05_camera_preset_tactical": "PASS: High-altitude tactical overview",
+    "06_property_tiers_3d": "PASS: Procedural buildings (Tiers 1-4 residential blocks + Tier 5 grand landmark)",
+    "07_token_stacking_3d": "PASS: Turned tokens stacked on tile 1 with radial pinwheel distribution",
+    "08_physical_dice_roll": "PASS: Physical 3D dice cubes rolling with dynamic physics angles",
+    "09_light_action_dock": "PASS: Dominant emerald primary CTA button (\"LẮC XÚC XẮC\") with high contrast",
+    "10_property_detail_sheet": "PASS: Contextual property detail modal in crisp white linen card theme",
+    "11_chaos_event_card": "PASS: Calamity event card with clear readable typography and red accent",
+    "12_responsive_mobile_portrait": "PASS: Mobile portrait layout fits 375px width with zero horizontal overflow",
+    "13_responsive_mobile_landscape": "PASS: Mobile landscape layout auto-fits board and bottom controls",
+    "14_desktop_ultrawide": "PASS: Spacious desktop layout with board occupying center and side event feed",
+    "15_game_setup_light": "PASS: Game setup modal with crisp light theme tabs and player configuration"
+  },
+  "fpsTelemetry": {
+    "isometric_3d": {
+      "fps": 143.2,
+      "avgFrameTimeMs": 6.98,
+      "minFrameTimeMs": -5.7,
+      "maxFrameTimeMs": 14,
+      "totalFrames": 215
+    }
+  }
+}

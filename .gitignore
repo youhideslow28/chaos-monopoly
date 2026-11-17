@@ -1,0 +1,17 @@
+node_modules
+dist
+data
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+.vercel
+.env
+.env.local
+.env.*.local
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+coverage
+.DS_Store
+Thumbs.db

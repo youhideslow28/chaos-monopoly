@@ -1,0 +1,184 @@
+{
+  "timestamp": "2026-11-01T05:12:55.998Z",
+  "browser": {
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+    "vendor": "Google Inc.",
+    "platform": "Win32",
+    "devicePixelRatio": 1,
+    "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+    "shadingLangVersion": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)",
+    "gpuVendor": "Google Inc. (AMD)",
+    "gpuRenderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+  },
+  "system": {},
+  "rendering": {
+    "layers": {
+      "threeCanvasFound": true,
+      "threeCanvasVisible": true,
+      "canvasWidth": 300,
+      "canvasHeight": 300,
+      "domBoardSlabFound": false,
+      "perspectiveBoardFound": true
+    },
+    "selection": {
+      "modalOpen": false,
+      "modalTitle": null
+    }
+  },
+  "gameplay": {
+    "initialState": {
+      "status": "PLAYING",
+      "turnPhase": "WAITING_FOR_ROLL",
+      "activePlayerIndex": 0,
+      "activePlayerName": "Tài Phiệt Tân Thủ",
+      "cash": 1500,
+      "position": 0
+    },
+    "postRollState": {
+      "status": "PLAYING",
+      "turnPhase": "ACTION_MENU",
+      "dice": [
+        6,
+        5
+      ],
+      "diceSum": 11,
+      "position": 11,
+      "cash": 1500,
+      "isBankrupt": false
+    },
+    "purchase": {
+      "propertyId": 11,
+      "ownerId": "player-1",
+      "buyerId": "player-1",
+      "cash": 1360
+    },
+    "purchaseSuccess": true
+  },
+  "responsive": {
+    "07_desktop_1440x900": {
+      "name": "07_desktop_1440x900",
+      "width": 1440,
+      "height": 900,
+      "category": "Desktop Standard",
+      "scrollWidth": 1440,
+      "innerWidth": 1440,
+      "hasHorizontalOverflow": false,
+      "boardCanvasRendered": true,
+      "boardWidth": 424,
+      "boardHeight": 244,
+      "ctaButtonHeight": 30,
+      "ctaMeetsTouchTarget": false
+    },
+    "08_desktop_widescreen_1920x1080": {
+      "name": "08_desktop_widescreen_1920x1080",
+      "width": 1920,
+      "height": 1080,
+      "category": "Desktop Widescreen",
+      "scrollWidth": 1920,
+      "innerWidth": 1920,
+      "hasHorizontalOverflow": false,
+      "boardCanvasRendered": true,
+      "boardWidth": 424,
+      "boardHeight": 244,
+      "ctaButtonHeight": 30,
+      "ctaMeetsTouchTarget": false
+    },
+    "09_tablet_768x1024": {
+      "name": "09_tablet_768x1024",
+      "width": 768,
+      "height": 1024,
+      "category": "Tablet Portrait",
+      "scrollWidth": 848,
+      "innerWidth": 768,
+      "hasHorizontalOverflow": true,
+      "boardCanvasRendered": true,
+      "boardWidth": 424,
+      "boardHeight": 244,
+      "ctaButtonHeight": 30,
+      "ctaMeetsTouchTarget": false
+    },
+    "10_mobile_portrait_375x812": {
+      "name": "10_mobile_portrait_375x812",
+      "width": 375,
+      "height": 812,
+      "category": "Mobile Portrait (iPhone X/12 Mini)",
+      "scrollWidth": 537,
+      "innerWidth": 375,
+      "hasHorizontalOverflow": true,
+      "boardCanvasRendered": true,
+      "boardWidth": 424,
+      "boardHeight": 244,
+      "ctaButtonHeight": 28,
+      "ctaMeetsTouchTarget": false
+    },
+    "11_mobile_portrait_390x844": {
+      "name": "11_mobile_portrait_390x844",
+      "width": 390,
+      "height": 844,
+      "category": "Mobile Portrait (iPhone 13/14)",
+      "scrollWidth": 537,
+      "innerWidth": 390,
+      "hasHorizontalOverflow": true,
+      "boardCanvasRendered": true,
+      "boardWidth": 424,
+      "boardHeight": 244,
+      "ctaButtonHeight": 28,
+      "ctaMeetsTouchTarget": false
+    },
+    "12_mobile_landscape_812x375": {
+      "name": "12_mobile_landscape_812x375",
+      "width": 812,
+      "height": 375,
+      "category": "Mobile Landscape",
+      "scrollWidth": 848,
+      "innerWidth": 812,
+      "hasHorizontalOverflow": true,
+      "boardCanvasRendered": true,
+      "boardWidth": 424,
+      "boardHeight": 244,
+      "ctaButtonHeight": 30,
+      "ctaMeetsTouchTarget": false
+    }
+  },
+  "lightDesign": {
+    "htmlClass": "dark",
+    "bodyClass": "bg-[#090d16] text-slate-100 font-game antialiased select-none overflow-x-hidden min-h-screen",
+    "bodyBg": "rgb(9, 13, 22)",
+    "rootBg": "rgba(0, 0, 0, 0)",
+    "elementsWithDarkClass": 1,
+    "elementsWithCyberBg": 1
+  },
+  "performance": {
+    "sampleFrames": 499,
+    "avgFps": 137.4,
+    "avgFrameTimeMs": 7.28,
+    "medianFrameTimeMs": 6.9,
+    "p95FrameTimeMs": 7.2,
+    "p99FrameTimeMs": 14,
+    "droppedFrames60fps": 2,
+    "droppedFrames30fps": 0,
+    "memory": {
+      "usedJSHeapSizeMB": "14.24",
+      "totalJSHeapSizeMB": "32.83",
+      "jsHeapSizeLimitMB": "4192.00",
+      "source": "performance.memory (V8 JavaScript Heap)"
+    }
+  },
+  "screenshots": {
+    "01_main_menu": "C:\\Users\\hxn\\Desktop\\CHAOS MONOPOLY\\docs\\evidence\\post_overhaul\\01_main_menu.png",
+    "02_full_3d_board": "C:\\Users\\hxn\\Desktop\\CHAOS MONOPOLY\\docs\\evidence\\post_overhaul\\02_full_3d_board.png",
+    "03_selected_property": "C:\\Users\\hxn\\Desktop\\CHAOS MONOPOLY\\docs\\evidence\\post_overhaul\\03_selected_property.png",
+    "04_dice_roll": "C:\\Users\\hxn\\Desktop\\CHAOS MONOPOLY\\docs\\evidence\\post_overhaul\\04_dice_roll.png",
+    "05_player_token_movement": "C:\\Users\\hxn\\Desktop\\CHAOS MONOPOLY\\docs\\evidence\\post_overhaul\\05_player_token_movement.png",
+    "06_buildings_and_ownership": "C:\\Users\\hxn\\Desktop\\CHAOS MONOPOLY\\docs\\evidence\\post_overhaul\\06_buildings_and_ownership.png",
+    "07_desktop_1440x900": "C:\\Users\\hxn\\Desktop\\CHAOS MONOPOLY\\docs\\evidence\\post_overhaul\\07_desktop_1440x900.png",
+    "08_desktop_widescreen_1920x1080": "C:\\Users\\hxn\\Desktop\\CHAOS MONOPOLY\\docs\\evidence\\post_overhaul\\08_desktop_widescreen_1920x1080.png",
+    "09_tablet_768x1024": "C:\\Users\\hxn\\Desktop\\CHAOS MONOPOLY\\docs\\evidence\\post_overhaul\\09_tablet_768x1024.png",
+    "10_mobile_portrait_375x812": "C:\\Users\\hxn\\Desktop\\CHAOS MONOPOLY\\docs\\evidence\\post_overhaul\\10_mobile_portrait_375x812.png",
+    "11_mobile_portrait_390x844": "C:\\Users\\hxn\\Desktop\\CHAOS MONOPOLY\\docs\\evidence\\post_overhaul\\11_mobile_portrait_390x844.png",
+    "12_mobile_landscape_812x375": "C:\\Users\\hxn\\Desktop\\CHAOS MONOPOLY\\docs\\evidence\\post_overhaul\\12_mobile_landscape_812x375.png"
+  },
+  "defects": [
+    "index.html contains residual class=\"dark\" on <html> element"
+  ]
+}

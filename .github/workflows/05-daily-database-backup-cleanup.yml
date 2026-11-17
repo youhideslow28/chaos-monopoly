@@ -1,0 +1,40 @@
+name: "Schedule 5 — Daily Database WAL Integrity, Backup & Cleanup"
+
+on:
+  schedule:
+    # Chạy định kỳ mỗi ngày lúc 04:00 UTC (11:00 trưa giờ Việt Nam)
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+
+jobs:
+  database-integrity-and-cleanup:
+    name: "SQLite WAL Checkpoint, VACUUM INTO Backup & Room Pruning"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: "Checkout Repository"
+        uses: actions/checkout@v4
+
+      - name: "Setup Node.js 22"
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: "Install Dependencies"
+        run: npm ci
+
+      - name: "Verify SQLite WAL Checkpointing, Atomic Backup & Crash Recovery"
+        run: npx vitest run src/game/__tests__/phase07_database_recovery.test.ts
+
+      - name: "Trigger Production Database Maintenance Cron (if PRODUCTION_URL is configured)"
+        env:
+          PRODUCTION_URL: ${{ vars.PRODUCTION_URL }}
+        run: |
+          if [ -n "$PRODUCTION_URL" ]; then
+            echo "Triggering database maintenance & room pruning on $PRODUCTION_URL/api/cron/maintenance ..."
+            curl -fsS -X POST "$PRODUCTION_URL/api/cron/maintenance" | tee maintenance_report.json
+          else
+            echo "Local SQLite WAL integrity & backup verification completed."
+          fi

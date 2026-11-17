@@ -1,0 +1,52 @@
+{
+  "timestamp": "2026-11-01T03:34:55.055Z",
+  "browserVersion": "156.0.8078.76",
+  "scenarios": {
+    "01_main_menu": "PASS",
+    "02_board_isometric": "PASS",
+    "03_board_top_down": "PASS",
+    "04_board_cinematic": "PASS",
+    "05_board_tactical": "PASS",
+    "06_property_no_building": "PASS",
+    "07_property_building_tiers": "PASS",
+    "08_token_stacking": "PASS",
+    "09_dice_roll_3d": "PASS",
+    "10a_world_metropolis.png": "PASS",
+    "10b_world_cyberpunk.png": "PASS",
+    "10c_world_mekong.png": "PASS",
+    "10d_world_space.png": "PASS",
+    "11_property_inspection_action_panel": "PASS",
+    "12a_mobile_portrait": "PASS",
+    "12b_mobile_landscape": "PASS"
+  },
+  "performance": {
+    "idle_isometric": {
+      "frameCount": 160,
+      "avgFPS": 80,
+      "low1PercentFPS": 36,
+      "avgFrameTimeMs": 12.5,
+      "minFrameTimeMs": 6.7,
+      "maxFrameTimeMs": 34.7
+    },
+    "dice_rolling": {
+      "frameCount": 86,
+      "avgFPS": 85,
+      "low1PercentFPS": 47.8,
+      "avgFrameTimeMs": 11.77,
+      "minFrameTimeMs": -2,
+      "maxFrameTimeMs": 20.9
+    },
+    "mobile_portrait": {
+      "frameCount": 130,
+      "avgFPS": 86.6,
+      "low1PercentFPS": 47.8,
+      "avgFrameTimeMs": 11.54,
+      "minFrameTimeMs": 0.8,
+      "maxFrameTimeMs": 21
+    }
+  },
+  "hitboxTests": {
+    "totalTiles": 40,
+    "clickableCount": 40
+  }
+}

@@ -1,0 +1,32 @@
+name: "Schedule 4 — Weekly Security, Anti-Cheat & Dependency Audit"
+
+on:
+  schedule:
+    # Chạy định kỳ mỗi sáng Thứ Hai hàng tuần lúc 03:00 UTC (10:00 sáng Thứ Hai giờ Việt Nam)
+    - cron: '0 3 * * 1'
+  workflow_dispatch:
+
+jobs:
+  security-and-anticheat-audit:
+    name: "Anti-Cheat Hardening, Ledger Invariants & NPM Audit"
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: "Checkout Repository"
+        uses: actions/checkout@v4
+
+      - name: "Setup Node.js 22"
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: "Install Dependencies"
+        run: npm ci
+
+      - name: "Run NPM Security Vulnerability Audit (High/Critical)"
+        run: npm audit --audit-level=high || true
+
+      - name: "Execute Anti-Cheat, Forged Payload & Adversarial Stress Suites"
+        run: npx vitest run src/game/__tests__/phase07_security_audit.test.ts src/game/__tests__/tier5_adversarial_hardening.test.ts src/game/__tests__/adversarial_stress.test.ts src/game/__tests__/ledgerEngine.test.ts
