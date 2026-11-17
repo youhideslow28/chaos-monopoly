@@ -173,6 +173,11 @@ describe('Phase 09 — Vercel Full-Stack HTTP Transport, Database Maintenance & 
       });
     });
 
+    proxyServer.on('upgrade', (_req, socket) => {
+      socket.write('HTTP/1.1 404 Not Found\r\nConnection: close\r\n\r\n');
+      socket.destroy();
+    });
+
     await new Promise<void>(resolve => proxyServer.listen(0, '127.0.0.1', () => resolve()));
     const proxyPort = (proxyServer.address() as any).port;
 

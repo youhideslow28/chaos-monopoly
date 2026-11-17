@@ -140,8 +140,19 @@ export class ChaosMultiplayerClient {
       const socket = new WebSocket(this.wsUrl);
       this.ws = socket;
 
+      const connectTimeout = setTimeout(() => {
+        if (!opened && !this.manualClose) {
+          try {
+            socket.close();
+          } catch {}
+          this.ws = null;
+          this.tryHttpFallback(onConnected);
+        }
+      }, 2500);
+
       socket.onopen = () => {
         opened = true;
+        clearTimeout(connectTimeout);
         this.httpPollingMode = false;
         this.stopHttpPolling();
         this.reconnectAttempts = 0;
@@ -164,8 +175,12 @@ export class ChaosMultiplayerClient {
       };
 
       socket.onclose = () => {
+        clearTimeout(connectTimeout);
         this.stopHeartbeat();
         this.ws = null;
+        if (this.httpPollingMode) {
+          return;
+        }
         if (!opened && !this.manualClose) {
           // WebSocket handshake rejected (e.g. serverless platform like Vercel) -> try HTTP fallback!
           this.tryHttpFallback(onConnected);
@@ -179,7 +194,11 @@ export class ChaosMultiplayerClient {
       };
 
       socket.onerror = () => {
-        // Socket error is immediately followed by 'close' event in browser and Node environments.
+        clearTimeout(connectTimeout);
+        if (!opened && !this.manualClose) {
+          this.ws = null;
+          this.tryHttpFallback(onConnected);
+        }
       };
     } catch {
       this.ws = null;
@@ -187,11 +206,15 @@ export class ChaosMultiplayerClient {
     }
   }
 
+  private fallbackInProgress: boolean = false;
+
   private async tryHttpFallback(onConnected?: () => void): Promise<void> {
+    if (this.httpPollingMode || this.fallbackInProgress) return;
     if (this.manualClose || typeof fetch === 'undefined') {
       this.setStatus('DISCONNECTED');
       return;
     }
+    this.fallbackInProgress = true;
     try {
       const res = await fetch(this.httpApiUrl, {
         method: 'GET',
@@ -218,6 +241,8 @@ export class ChaosMultiplayerClient {
         this.setStatus('DISCONNECTED');
         this.callbacks.onError?.('CONNECTION_FAILED', 'Không thể kết nối tới máy chủ Multiplayer.');
       }
+    } finally {
+      this.fallbackInProgress = false;
     }
   }
 
