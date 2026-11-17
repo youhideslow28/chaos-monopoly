@@ -1,7 +1,7 @@
 import os from 'node:os';
 import path from 'node:path';
 import type http from 'node:http';
-import { ChaosMultiplayerServer } from '../src/server/multiplayerServer';
+import { ChaosMultiplayerServer } from './multiplayerServer';
 
 // Global singleton across warm serverless function invocations on Vercel
 const globalForServer = globalThis as unknown as {

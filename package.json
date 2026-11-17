@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "server": "tsx src/server/index.ts",
-    "build": "tsc && vite build",
+    "build:api": "esbuild ./src/server/vercelHandler.ts --bundle --platform=node --target=node22 --format=esm --packages=external --outfile=api/index.js",
+    "build": "tsc && vite build && npm run build:api",
     "preview": "vite preview",
     "test": "vitest run"
   },
